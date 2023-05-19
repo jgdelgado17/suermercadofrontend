@@ -1,0 +1,55 @@
+<div class="col-md-6 offset-md-3">
+  <h3 class="text-center">Edit of product</h3>
+  <form (ngSubmit)="onSubmit()" #productoForm = "ngForm">
+      <div class="form-group">
+          <label>Name : </label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="producto.name" name="name" required
+              minlength="3" maxlength="30" placeholder="Name of product" #name="ngModel">
+
+          <div class="alert alert-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
+              <div *ngIf="name.errors.required">You must add a name</div>
+              <div *ngIf="name.errors.minlength">The name must have a minimum of 3 characters</div>
+              <div *ngIf="name.errors.maxlength">The name must have a maximum of 30 characters</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label>Enabled &nbsp;&nbsp; </label>
+          <input type="checkbox" class="" id="enabled" [(ngModel)]="producto.enabled" name="enabled">
+      </div>
+
+      <div class="form-group">
+          <label>In inventory : </label>
+          <input type="text" class="form-control" id="inInventory" [(ngModel)]="producto.inInventory"
+              name="inInventory" required minlength="1" placeholder="Total on inventory" #inInventory="ngModel">
+
+          <div class="alert alert-danger" *ngIf="inInventory.invalid && (inInventory.dirty || inInventory.touched)">
+              <div *ngIf="inInventory.errors.required">You must add a total on inventory</div>
+              <div *ngIf="inInventory.errors.minlength">The inventory must have a minimum of 1</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label>Min : </label>
+          <input type="text" class="form-control" id="min" [(ngModel)]="producto.min" name="min" required
+              minlength="1" placeholder=" Min on inventory" #min="ngModel">
+
+          <div class="alert alert-danger" *ngIf="min.invalid && (min.dirty || min.touched)">
+              <div *ngIf="min.errors.required">You must add a min on inventory</div>
+              <div *ngIf="min.errors.minlength">The min must have a minimum of 1</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label>Max : </label>
+          <input type="text" class="form-control" id="max" [(ngModel)]="producto.max" name="max" required
+              minlength="1" placeholder="Max on inventory" #max="ngModel">
+
+          <div class="alert alert-danger" *ngIf="max.invalid && (max.dirty || max.touched)">
+              <div *ngIf="max.errors.required">You must add a max on inventory</div>
+              <div *ngIf="max.errors.minlength">The max must have a minimum of 1</div>
+          </div>
+      </div>
+      <button class="btn btn-success" [disabled]="!productoForm.form.valid">Save</button>
+  </form>
+</div>

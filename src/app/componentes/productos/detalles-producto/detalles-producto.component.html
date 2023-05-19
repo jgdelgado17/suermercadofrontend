@@ -1,0 +1,26 @@
+<h3 class="text-center">Details of {{producto.name}}</h3>
+<div class="text-center">
+    <div>
+        <label><b>Id :</b> {{producto.id}}</label>
+    </div>
+    <div>
+        <label><b>Name : </b> {{producto.name}}</label>
+    </div>
+    <div>
+        <label><b>Enable : </b>
+            <span *ngIf="producto.enabled; else noCheck" class="text-success">&#10004;</span>
+                <ng-template #noCheck>
+                    <span class="text-danger">&#10008;</span>
+                </ng-template>
+        </label>
+    </div>
+    <div>
+        <label><b>In inventory : </b> {{producto.inInventory}}</label>
+    </div>
+    <div>
+        <label><b>Min in inventory : </b> {{producto.min}}</label>
+    </div>
+    <div>
+        <label><b>Max in inventory : </b> {{producto.max}}</label>
+    </div>
+</div>
