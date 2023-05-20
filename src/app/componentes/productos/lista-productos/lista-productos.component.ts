@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Producto } from 'src/app/clases/productos/producto';
 import { ProductoService } from 'src/app/servicios/productos/producto.service';
 import swal from 'sweetalert2';
+import { ProductoCompra } from 'src/app/clases/compra/producto-compra';
+import { CompraService } from 'src/app/servicios/compras/compra.service';
 
 @Component({
   selector: 'app-lista-productos',
@@ -11,8 +13,9 @@ import swal from 'sweetalert2';
 })
 export class ListaProductosComponent {
   productos: Producto[];
+  cantidades: { [key: number]: number } = {};
 
-  constructor(private productoServicio: ProductoService, private router: Router) { }
+  constructor(private productoServicio: ProductoService, private router: Router, private compraServicio: CompraService) {}
 
   ngOnInit(): void {
     this.obtenerProductos();
@@ -58,5 +61,16 @@ export class ListaProductosComponent {
 
   detallesProducto(id: number) {
     this.router.navigate(['detail-product', id]);
+  }
+
+  capturarCantidad(event: any, productoId: number) {
+    this.cantidades[productoId] = event.target.value;
+    // Realiza las acciones necesarias con la cantidad capturada
+  }
+
+  comprarProducto(producto: Producto) {
+    const cantidad = this.cantidades[producto.id];
+    this.compraServicio.agregarProducto(producto, cantidad);
+    // this.router.navigate(['buy-product'])
   }
 }

@@ -9,6 +9,7 @@ import { RegistarProductosComponent } from './componentes/productos/registar-pro
 import { FormsModule } from '@angular/forms';
 import { ActualizarProductoComponent } from './componentes/productos/actualizar-producto/actualizar-producto.component';
 import { DetallesProductoComponent } from './componentes/productos/detalles-producto/detalles-producto.component';
+import { ComprarProductoComponent } from './componentes/productos/comprar-producto/comprar-producto.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { DetallesProductoComponent } from './componentes/productos/detalles-prod
     ListaProductosComponent,
     RegistarProductosComponent,
     ActualizarProductoComponent,
-    DetallesProductoComponent
+    DetallesProductoComponent,
+    ComprarProductoComponent
   ],
   imports: [
     BrowserModule,
