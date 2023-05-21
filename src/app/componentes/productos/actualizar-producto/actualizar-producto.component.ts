@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Producto } from 'src/app/clases/productos/producto';
 import { ProductoService } from 'src/app/servicios/productos/producto.service';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-actualizar-producto',
@@ -29,6 +30,10 @@ export class ActualizarProductoComponent {
   onSubmit() {
     this.productoServicio.actualizarProducto(this.producto, this.id).subscribe(data => {
       this.irAlistaDeProductos();
-    },error => console.log(error));
+    },error => swal(`${error.error}`));
+  }
+
+  soloNumeros(event) {
+    return this.productoServicio.soloNumeros(event);
   }
 }

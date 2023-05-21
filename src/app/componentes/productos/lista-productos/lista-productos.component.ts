@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Producto } from 'src/app/clases/productos/producto';
 import { ProductoService } from 'src/app/servicios/productos/producto.service';
 import swal from 'sweetalert2';
-import { ProductoCompra } from 'src/app/clases/compra/producto-compra';
 import { CompraService } from 'src/app/servicios/compras/compra.service';
 
 @Component({
@@ -15,7 +14,7 @@ export class ListaProductosComponent {
   productos: Producto[];
   cantidades: { [key: number]: number } = {};
 
-  constructor(private productoServicio: ProductoService, private router: Router, private compraServicio: CompraService) {}
+  constructor(private productoServicio: ProductoService, private router: Router, private compraServicio: CompraService) { }
 
   ngOnInit(): void {
     this.obtenerProductos();
@@ -65,12 +64,18 @@ export class ListaProductosComponent {
 
   capturarCantidad(event: any, productoId: number) {
     this.cantidades[productoId] = event.target.value;
-    // Realiza las acciones necesarias con la cantidad capturada
   }
 
   comprarProducto(producto: Producto) {
     const cantidad = this.cantidades[producto.id];
-    this.compraServicio.agregarProducto(producto, cantidad);
-    // this.router.navigate(['buy-product'])
+    if (!isNaN(cantidad)) {
+      this.compraServicio.agregarProducto(producto, cantidad);
+    } else {
+      swal('La cantidad no es un número válido.')
+    }
+  }
+
+  soloNumeros(event) {
+    return this.compraServicio.soloNumeros(event);
   }
 }

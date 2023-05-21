@@ -21,7 +21,7 @@
       <div class="form-group">
           <label>In inventory : </label>
           <input type="text" class="form-control" id="inInventory" [(ngModel)]="producto.inInventory"
-              name="inInventory" required minlength="1" placeholder="Total on inventory" #inInventory="ngModel">
+              name="inInventory" required minlength="1" placeholder="Total on inventory" #inInventory="ngModel" (keypress)="soloNumeros($event)">
 
           <div class="alert alert-danger" *ngIf="inInventory.invalid && (inInventory.dirty || inInventory.touched)">
               <div *ngIf="inInventory.errors.required">You must add a total on inventory</div>
@@ -32,7 +32,7 @@
       <div class="form-group">
           <label>Min : </label>
           <input type="text" class="form-control" id="min" [(ngModel)]="producto.min" name="min" required
-              minlength="1" placeholder=" Min on inventory" #min="ngModel">
+              minlength="1" placeholder=" Min on inventory" #min="ngModel" (keypress)="soloNumeros($event)">
 
           <div class="alert alert-danger" *ngIf="min.invalid && (min.dirty || min.touched)">
               <div *ngIf="min.errors.required">You must add a min on inventory</div>
@@ -43,7 +43,7 @@
       <div class="form-group">
           <label>Max : </label>
           <input type="text" class="form-control" id="max" [(ngModel)]="producto.max" name="max" required
-              minlength="1" placeholder="Max on inventory" #max="ngModel">
+              minlength="1" placeholder="Max on inventory" #max="ngModel" (keypress)="soloNumeros($event)">
 
           <div class="alert alert-danger" *ngIf="max.invalid && (max.dirty || max.touched)">
               <div *ngIf="max.errors.required">You must add a max on inventory</div>

@@ -1,61 +1,83 @@
-<div class="col-md-6 offset-md-3">
-    <h3 class="text-center">Buy products</h3>
-    <form (ngSubmit)="onSubmit()" #compraForm="ngForm">
-        <div class="form-group">
-            <label>Client name </label>
-            <input type="text" class="" id="clientName" [(ngModel)]="compra.clientName"
-                name="clientName" required minlength="3" maxlength="30" placeholder="Your clientName"
-                #clientName="ngModel">
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h3 class="text-center">Buy products</h3>
+        <form (ngSubmit)="onSubmit()" #compraForm="ngForm" class="form-inline">
+            <div class="form-group mb-2">
+                <label class="mr-2">Client name</label>
+                <input type="text" size="10" style="font-size: 10px;" class="form-control" id="clientName"
+                    [(ngModel)]="compra.clientName" name="clientName" required minlength="3" maxlength="30"
+                    placeholder="Your name" #clientName="ngModel">
 
-            <div class="alert alert-danger" *ngIf="clientName.invalid && (clientName.dirty || clientName.touched)">
-                <div *ngIf="clientName.errors.required">You must add a name</div>
-                <div *ngIf="clientName.errors.minlength">The name must have a minimum of 3 characters</div>
-                <div *ngIf="clientName.errors.maxlength">The name must have a maximum of 30 characters</div>
+                <div class="alert alert-danger mt-2"
+                    *ngIf="clientName.invalid && (clientName.dirty || clientName.touched)">
+                    <div *ngIf="clientName.errors.required">You must add a name</div>
+                    <div *ngIf="clientName.errors.minlength">The name must have a minimum of 3 characters</div>
+                    <div *ngIf="clientName.errors.maxlength">The name must have a maximum of 30 characters</div>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label>Document </label>
-            <input type="text" class="" id="document" [(ngModel)]="compra.document" name="document" required
-                minlength="3" maxlength="30" placeholder="Your number document" #document="ngModel">
+            <div class="form-group ml-3 mb-2">
+                <label class="mr-2">Document</label>
+                <input type="text" size="10" style="font-size: 10px;" class="form-control" id="document"
+                    [(ngModel)]="compra.document" name="document" required minlength="3" maxlength="30"
+                    placeholder="Your document" #document="ngModel" (keypress)="soloNumeros($event)">
 
-            <div class="alert alert-danger" *ngIf="document.invalid && (document.dirty || document.touched)">
-                <div *ngIf="document.errors.required">You must add a document</div>
-                <div *ngIf="document.errors.minlength">The document must have a minimum of 3 characters</div>
-                <div *ngIf="document.errors.maxlength">The document must have a maximum of 30 characters</div>
+                <div class="alert alert-danger mt-2" *ngIf="document.invalid && (document.dirty || document.touched)">
+                    <div *ngIf="document.errors.required">You must add a document</div>
+                    <div *ngIf="document.errors.minlength">The document must have a minimum of 3 characters</div>
+                    <div *ngIf="document.errors.maxlength">The document must have a maximum of 30 characters</div>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label>Document type</label>
-            <select class="" [(ngModel)]="compra.idType" name="idType" required>
-                <!-- <option selected>Your document type</option> -->
-                <option value="cc">cc</option>
-                <option value="ti">ti</option>
-                <option value="pas">pas</option>
-            </select>
-        </div>
+            <div class="form-group ml-3 mb-2">
+                <label class="mr-2">Document type</label>
+                <select class="form-control" [(ngModel)]="compra.idType" name="idType" required size="1"
+                    style="font-size: 10px;" #idType="ngModel">
+                    <option selected>cc</option>
+                    <option value="ce">ce</option>
+                    <option value="ti">ti</option>
+                    <option value="pas">pas</option>
+                </select>
 
-        <button class="btn btn-success" [disabled]="!compraForm.form.valid" name="enviarCompra">Send buy</button>
-    </form>
+                <div class="alert alert-danger mt-2" *ngIf="idType.invalid && (idType.dirty || idType.touched)">
+                    <div *ngIf="idType.errors.required">You must select a idType</div>
+                    <div *ngIf="idType.errors.minlength">The idType must have a minimum of 3 characters</div>
+                    <div *ngIf="idType.errors.maxlength">The idType must have a maximum of 30 characters</div>
+                </div>
+            </div>
+
+            <button class="btn btn-success ml-3" [disabled]="!compraForm.form.valid" name="enviarCompra">Send
+                buy</button>
+        </form>
+    </div>
 </div>
 
 <div class="row">
-    <div class="col-8">
+    <div class="col-md-8">
         <h2>Shopping cart</h2>
-        <table class="table table-striped table-sm">
-            <thead class="table-secondary">
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody class="table-light">
-                <tr *ngFor="let producto of obtenerProds()">
-                    <td>{{producto.id}}</td>
-                    <td>{{producto.name}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead class="table-secondary">
+                    <tr>
+                        <!-- <th>Id</th> -->
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Remove</th> <!-- Columna adicional para el botón de eliminar -->
+                    </tr>
+                </thead>
+                <tbody class="table-light">
+                    <tr *ngFor="let detalle of obtenerDetalleCompra(); let i = index;">
+                        <!-- <td class="text-truncate">{{detalle.idProducto}}</td> -->
+                        <td class="text-truncate">{{detalle.nombreProducto}}</td>
+                        <td class="text-truncate">{{detalle.cantidad}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" (click)="eliminarDetalleCompra(i)">
+                                <i class="fa-regular fa-trash" style="color: #e61d0f;"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

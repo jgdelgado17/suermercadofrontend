@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Compra } from 'src/app/clases/compra/compra';
+import { DetalleCarrito } from 'src/app/clases/compra/detalle-carrito';
 import { ProductoCompra } from 'src/app/clases/compra/producto-compra';
-import { Producto } from 'src/app/clases/productos/producto';
 import { CompraService } from 'src/app/servicios/compras/compra.service';
 import swal from 'sweetalert2';
 
@@ -13,7 +13,6 @@ import swal from 'sweetalert2';
 })
 export class ComprarProductoComponent {
   compra: Compra = new Compra();
-  productoCompra: ProductoCompra;
   products: ProductoCompra[] = [];
 
   constructor(private compraServicio: CompraService, private router: Router) { }
@@ -33,7 +32,7 @@ export class ComprarProductoComponent {
       this.compraServicio.registrarCompra(this.compra).subscribe(data => {
         console.log(data);
         this.enviarProductoAlaLista();
-      }, error => console.log(error));
+      }, error => swal(`${error.error}`));
     }
   }
 
@@ -45,11 +44,20 @@ export class ComprarProductoComponent {
     this.enviarCompra();
   }
 
+  eliminarDetalleCompra(index: number){
+    this.compraServicio.eliminarProducto(index);
+  }
+
   obtenerProductos(): ProductoCompra[] {
     return this.compraServicio.obtenerProductos();
   }
 
-  obtenerProds(): Producto[] {
-    return this.compraServicio.obtenerProds();
+  obtenerDetalleCompra(): DetalleCarrito[] {
+    return this.compraServicio.obtenerDetalleCompra();
   }
+
+  soloNumeros(event) {
+    return this.compraServicio.soloNumeros(event);
+  }
+
 }

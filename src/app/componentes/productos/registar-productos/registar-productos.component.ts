@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Producto } from 'src/app/clases/productos/producto';
 import { ProductoService } from 'src/app/servicios/productos/producto.service';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registar-productos',
@@ -21,7 +22,7 @@ export class RegistarProductosComponent {
     this.productoServicio.registrarProducto(this.producto).subscribe(data => {
       console.log(data);
       this.enviarProductoAlaLista();
-    }, error => console.log(error));
+    }, error => swal(`${error.error}`));
   }
 
   enviarProductoAlaLista() {
@@ -30,6 +31,10 @@ export class RegistarProductosComponent {
 
   onSubmit() {
     this.guardarProduto();
+  }
+
+  soloNumeros(event) {
+    return this.productoServicio.soloNumeros(event);
   }
 
 }
