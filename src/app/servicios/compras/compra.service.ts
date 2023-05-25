@@ -24,24 +24,58 @@ export class CompraService {
   }
 
   agregarProducto(producto: Producto, cantidad: number) {
-    this.productoCompra = new ProductoCompra();
+    const existingProduct = this.products.find(product => product.idProduct === producto.id);
+    const existingDetalle = this.detalleCarrito.find(product => product.idProducto === producto.id);
 
-    this.productoCompra.idProduct = producto.id;
-    this.productoCompra.quantity = cantidad;
-    this.products.push(this.productoCompra);
+    if (existingProduct) {
+      var q = existingProduct.quantity;
+      var c = existingDetalle.cantidad;
+      existingProduct.quantity = parseInt(q.toString()) + parseInt(cantidad.toString());
+      existingDetalle.cantidad = parseInt(c.toString()) + parseInt(cantidad.toString());
+    }
+    else {
+      this.productoCompra = new ProductoCompra();
 
-    this.detalleCompra = new DetalleCarrito();
-    this.detalleCompra.idProducto = producto.id;
-    this.detalleCompra.nombreProducto = producto.name;
-    this.detalleCompra.cantidad = cantidad;
-    this.detalleCarrito.push(this.detalleCompra);
+      this.productoCompra.idProduct = producto.id;
+      this.productoCompra.quantity = cantidad;
+      this.products.push(this.productoCompra);
+
+      this.detalleCompra = new DetalleCarrito();
+      this.detalleCompra.idProducto = producto.id;
+      this.detalleCompra.nombreProducto = producto.name;
+      this.detalleCompra.cantidad = cantidad;
+      this.detalleCarrito.push(this.detalleCompra);
+    }
+  }
+
+  aumentarCantidad(producto: number) {
+    const existingProduct = this.products.find(product => product.idProduct === producto);
+    const existingDetalle = this.detalleCarrito.find(product => product.idProducto === producto);
+
+    if (existingProduct) {
+      var q = existingProduct.quantity;
+      var c = existingDetalle.cantidad;
+      existingProduct.quantity = parseInt(q.toString()) + 1;
+      existingDetalle.cantidad = parseInt(c.toString()) + 1;
+    }
+  }
+
+  disminuirCantidad(producto: number) {
+    const existingProduct = this.products.find(product => product.idProduct === producto);
+    const existingDetalle = this.detalleCarrito.find(product => product.idProducto === producto);
+
+    if (existingProduct) {
+      var q = existingProduct.quantity;
+      var c = existingDetalle.cantidad;
+      existingProduct.quantity = parseInt(q.toString()) - 1;
+      existingDetalle.cantidad = parseInt(c.toString()) - 1;
+    }
   }
 
   obtenerProductos(): ProductoCompra[] {
     return this.products;
   }
 
-  // Función para eliminar un producto por su idProduct
   eliminarProducto(index: number) {
     this.products.splice(index, 1);
     this.detalleCarrito.splice(index, 1);

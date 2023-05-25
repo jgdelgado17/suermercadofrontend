@@ -60,4 +60,12 @@ export class ComprarProductoComponent {
     return this.compraServicio.soloNumeros(event);
   }
 
+  aumentarCantidad(id:number){
+    this.compraServicio.aumentarCantidad(id);
+  }
+
+  disminuirCantidad(id:number){
+    this.compraServicio.disminuirCantidad(id);
+  }
+
 }

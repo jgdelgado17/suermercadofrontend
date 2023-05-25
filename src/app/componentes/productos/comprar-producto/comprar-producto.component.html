@@ -62,17 +62,25 @@
                         <!-- <th>Id</th> -->
                         <th>Name</th>
                         <th>Quantity</th>
-                        <th>Remove</th> <!-- Columna adicional para el botón de eliminar -->
+                        <th>Drop</th> <!-- Columna adicional para el botón de eliminar -->
                     </tr>
                 </thead>
                 <tbody class="table-light">
                     <tr *ngFor="let detalle of obtenerDetalleCompra(); let i = index;">
                         <!-- <td class="text-truncate">{{detalle.idProducto}}</td> -->
                         <td class="text-truncate">{{detalle.nombreProducto}}</td>
-                        <td class="text-truncate">{{detalle.cantidad}}</td>
+                        <td class="text-truncate">
+                            {{detalle.cantidad}}
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button class="btn btn-danger btn-sm custom-button"
+                                    (click)="disminuirCantidad(detalle.idProducto)">-</button>
+                                <button class="btn btn-info btn-sm custom-button"
+                                    (click)="aumentarCantidad(detalle.idProducto)" style="margin-left: 2px;">+</button>
+                            </div>
+                        </td>
                         <td>
-                            <button class="btn btn-danger btn-sm" (click)="eliminarDetalleCompra(i)">
-                                <i class="fa-regular fa-trash" style="color: #e61d0f;"></i>
+                            <button class="btn btn-danger btn-sm custom-button" (click)="eliminarDetalleCompra(i)">X
+                                <!-- <i class="fa-regular fa-trash" style="color: #e61d0f;"></i> -->
                             </button>
                         </td>
                     </tr>
